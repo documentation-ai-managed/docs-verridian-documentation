@@ -1,0 +1,191 @@
+---
+title: Integrations and Extensions
+description: How to connect Verridian with third-party services and extend functionality for seamless workflows in AI and graphics projects.
+---
+
+## Overview
+
+Connect Verridian to popular third-party tools to enhance your AI models and WebGPU-accelerated graphics projects. You integrate with services like TensorFlow.js for machine learning, Three.js for 3D rendering, and Zapier for automation. These connections enable seamless data flows and custom workflows. Use the REST API for direct integrations or build extensions with JavaScript SDKs.
+
+<Callout kind="info">
+  All integrations require a valid API key from your Verridian dashboard. Generate one at `https://app.verridian.ai/settings/api`.
+</Callout>
+
+## Popular Integrations
+
+Discover ready-to-use connections that accelerate your development.
+
+<Columns cols={3}>
+  <Card title="TensorFlow.js" icon="brain" href="https://www.tensorflow.org/js" target="_blank">
+    Run ML models in the browser with WebGPU acceleration. Train and infer directly in your Verridian apps.
+  </Card>
+  <Card title="Three.js" icon="cube" href="https://threejs.org" target="_blank">
+    Create immersive 3D scenes powered by WebGPU. Render high-fidelity graphics alongside AI inferences.
+  </Card>
+  <Card title="Zapier" icon="zap" href="https://zapier.com" target="_blank">
+    Automate workflows between Verridian and 5000+ apps. Trigger AI tasks from emails or databases.
+  </Card>
+</Columns>
+
+| Integration | Category | Use Case |
+|-------------|----------|----------|
+| TensorFlow.js | ML | Browser-based inference |
+| Three.js | Graphics | WebGPU 3D rendering |
+| Zapier | Automation | No-code workflows |
+| GitHub Actions | CI/CD | Automated deployments |
+
+## API Connections
+
+Verridian exposes a REST API for programmatic access. Authenticate requests with Bearer tokens.
+
+<Request tabs="JavaScript,cURL" show-lines="true">
+  ```javascript
+  const response = await fetch('https://api.verridian.ai/v1/models/infer', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${YOUR_API_KEY}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      model: 'verridian-gpu-1',
+      input: { image: base64Image }
+    })
+  });
+  const data = await response.json();
+  ```
+  ```bash
+  curl -X POST https://api.verridian.ai/v1/models/infer \
+    -H "Authorization: Bearer $YOUR_API_KEY" \
+    -H "Content-Type: application/json" \
+    -d '{
+      "model": "verridian-gpu-1",
+      "input": { "image": "'$BASE64_IMAGE'" }
+    }'
+  ```
+</Request>
+
+<Response tabs="200,400">
+  ```json
+  {
+    "id": "infer-uuid-1234",
+    "status": "success",
+    "output": {
+      "predictions": [0.95, 0.03, 0.02],
+      "labels": ["cat", "dog", "bird"]
+    }
+  }
+  ```
+  ```json
+  {
+    "error": "Invalid API key",
+    "code": 401
+  }
+  ```
+</Response>
+
+<ParamField path="model" param-type="string" required="true">
+  Model identifier, e.g., `verridian-gpu-1`.
+</ParamField>
+
+<ParamField body="input" param-type="object" required="true">
+  Input data for inference, such as base64-encoded images.
+</ParamField>
+
+## Set Up a Zapier Integration
+
+Follow these steps to connect Zapier with Verridian webhooks.
+
+<Steps>
+  <Step title="Create Zap" icon="zap">
+    Log in to Zapier and click `Create Zap`. Search for `Verridian` as the trigger app.
+  </Step>
+  <Step title="Authenticate" icon="key">
+    Paste your Verridian API key. Test the connection to verify access.
+  </Step>
+  <Step title="Configure Action" icon="settings">
+    Select an action like `Run Inference`. Map fields from your trigger data.
+  </Step>
+  <Step title="Test and Publish" icon="play">
+    Run a test inference, then publish your Zap.
+  </Step>
+</Steps>
+
+## Platform-Specific Code Examples
+
+Integrate Verridian SDKs tailored to your stack.
+
+<Tabs>
+  <Tab title="Node.js" icon="nodejs">
+    ```javascript
+    const verridian = require('verridian-sdk');
+    const client = new verridian.Client({ apiKey: process.env.VERRIDIAN_API_KEY });
+
+    async function infer(imagePath) {
+      const result = await client.models.infer('verridian-gpu-1', {
+        image: fs.readFileSync(imagePath, 'base64')
+      });
+      console.log(result.output.predictions);
+    }
+    ```
+  </Tab>
+  <Tab title="React" icon="react">
+    ```jsx
+    import { useState } from 'react';
+    import { VerridianClient } from '@verridian/react-sdk';
+
+    function ImageClassifier() {
+      const [result, setResult] = useState(null);
+      const client = new VerridianClient({ apiKey: process.env.VERRIDIAN_API_KEY });
+
+      const handleInfer = async (file) => {
+        const base64 = await fileToBase64(file);
+        const output = await client.models.infer('verridian-gpu-1', { image: base64 });
+        setResult(output);
+      };
+
+      return <button onClick={handleInfer}>Classify</button>;
+    }
+    ```
+  </Tab>
+</Tabs>
+
+## Custom Extension Development
+
+Build bespoke extensions for unique needs.
+
+<Expandable title="Advanced: Create a WebGPU Extension" default-open="false">
+
+Develop custom plugins using the Verridian Extension API.
+
+<CodeGroup tabs="TypeScript,JavaScript">
+  ```typescript
+  import { Extension } from '@verridian/extensions';
+
+  class WebGPUExtension extends Extension {
+    name = 'webgpu-accelerator';
+    version = '1.0.0';
+
+    async init() {
+      const adapter = await navigator.gpu.requestAdapter();
+      const device = await adapter.requestDevice();
+      return { device };
+    }
+  }
+
+  export default WebGPUExtension;
+  ```
+  ```javascript
+  // Similar to TypeScript version
+  class WebGPUExtension {
+    // ...
+  }
+  ```
+</CodeGroup>
+
+Publish to the Verridian marketplace via `npm publish`.
+
+</Expandable>
+
+<Callout kind="tip">
+  Monitor integration performance using Verridian's dashboard analytics. Optimize for `<100ms` latency in production.
+</Callout>

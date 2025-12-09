@@ -1,0 +1,123 @@
+---
+title: Welcome to Verridian
+description: An overview of Verridian AI Agency, its mission to deliver premium AI solutions and WebGPU-accelerated experiences, and how to get started with their innovative platform.
+---
+
+## Overview
+
+Verridian AI Agency pioneers premium AI solutions and WebGPU-accelerated experiences. You harness cutting-edge artificial intelligence and graphics processing to build high-performance applications that redefine digital innovation. Our platform empowers developers to create immersive, real-time experiences with seamless integration.
+
+<Columns cols={3}>
+  <Card title="AI Solutions" icon="brain" href="/docs/ai">
+    Deploy advanced machine learning models directly in the browser for instant inference without server dependencies.
+  </Card>
+  <Card title="WebGPU Acceleration" icon="zap" href="/docs/webgpu">
+    Unlock GPU power on the web for compute-intensive tasks like rendering and simulations at native speeds.
+  </Card>
+  <Card title="Enterprise Tools" icon="shield" href="/docs/enterprise">
+    Scale your projects with secure, production-ready SDKs and dedicated support.
+  </Card>
+</Columns>
+
+## Core Offerings
+
+Explore Verridian's key technologies through these focused areas.
+
+<Tabs>
+  <Tab title="AI Inference" icon="cpu">
+    Run transformer models like Llama or Stable Diffusion in-browser using optimized WebGPU backends.
+    
+    ```javascript
+    import { VerridianAI } from '@verridian/ai-sdk';
+    
+    const ai = new VerridianAI({ model: 'llama-7b' });
+    const result = await ai.infer('Explain quantum computing.');
+    console.log(result.text);
+    ```
+  </Tab>
+  <Tab title="WebGPU Rendering" icon="monitor">
+    Accelerate 3D graphics and compute shaders for games, visualizations, and simulations.
+    
+    ```javascript
+    import { VerridianGPU } from '@verridian/webgpu-sdk';
+    
+    const gpu = new VerridianGPU();
+    await gpu.init();
+    const shader = gpu.createComputeShader('my-shader.wgsl');
+    gpu.dispatch(shader, { workgroupSize: [64, 1, 1] });
+    ```
+  </Tab>
+</Tabs>
+
+<Callout kind="tip">
+  Start with our free tier to test AI models and WebGPU pipelines. Upgrade for unlimited compute and priority support.
+</Callout>
+
+## Benefits of Verridian Technology
+
+You gain unparalleled performance and flexibility:
+
+| Benefit              | Description                                                                 |
+|----------------------|-----------------------------------------------------------------------------|
+| Zero Server Costs    | Run AI and GPU workloads client-side, eliminating cloud inference fees.     |
+| Native Speeds        | WebGPU delivers `<2ms` latency for shaders and models on modern browsers.    |
+| Cross-Platform       | Works on Chrome, Edge, Safari, and Firefox without plugins.                 |
+| Secure & Private     | Process sensitive data locally—no data leaves your device.                  |
+
+## Get Started in Minutes
+
+Follow these steps to launch your first Verridian project.
+
+<Steps>
+  <Step title="Install SDK" icon="download">
+    Add the core package to your project.
+    
+    <CodeGroup tabs="npm,yarn,pnpm">
+      ```bash
+      npm install @verridian/sdk
+      ```
+      ```bash
+      yarn add @verridian/sdk
+      ```
+      ```bash
+      pnpm add @verridian/sdk
+      ```
+    </CodeGroup>
+  </Step>
+  <Step title="Initialize Client" icon="settings">
+    Create a client instance with your API key.
+    
+    ```javascript
+    import { VerridianClient } from '@verridian/sdk';
+    
+    const client = new VerridianClient({
+      apiKey: 'your-api-key-here'
+    });
+    ```
+  </Step>
+  <Step title="Run First Compute" icon="rocket">
+    Execute a simple WebGPU kernel.
+    
+    ```javascript
+    const result = await client.compute({
+      shader: 'vec4 main() { return vec4(1.0); }',
+      size: 1024
+    });
+    console.log('Compute complete:', result);
+    ```
+  </Step>
+</Steps>
+
+<Expandable title="Advanced Configuration" default-open="false">
+  Customize your setup for production:
+  
+  ```javascript
+  const client = new VerridianClient({
+    apiKey: 'prod-key',
+    gpu: { adapter: 'high-performance' },
+    ai: { maxTokens: 4096 }
+  });
+  ```
+</Expandable>
+
+Ready to innovate? Dive into [AI docs](/docs/ai) or [WebGPU guides](/docs/webgpu) next.

@@ -1,0 +1,143 @@
+---
+title: Changelog
+description: Version history of the Verridian platform, highlighting updates, new features, and improvements over time.
+---
+
+## Overview
+
+Stay updated with the latest enhancements to Verridian. Review release notes below to see new AI models, WebGPU optimizations, and performance boosts. You access these changes via the dashboard or API.
+
+<Callout kind="info">
+  Upgrade to the latest version for WebGPU-accelerated rendering and improved AI inference speeds exceeding `<30ms` per query.
+</Callout>
+
+<Columns cols={3}>
+  <Card title="Latest Release" icon="zap" href="#v1-2-0">
+    v1.2.0 delivers real-time collaboration and 2x faster GPU rendering.
+  </Card>
+  <Card title="Upgrade Guide" icon="download" href="/docs/upgrades">
+    Follow steps to migrate your applications seamlessly.
+  </Card>
+  <Card title="API Changes" icon="code" href="/docs/api">
+    Review breaking changes and new endpoints.
+  </Card>
+</Columns>
+
+## Recent Releases
+
+Verridian releases follow semantic versioning. You receive notifications in the dashboard. Check the tags below for impact on your workflows.
+
+<Update label="2024-10-15" description="v1.2.0" tags={["feature", "improvement"]}>
+
+## New Features
+
+- Added real-time AI collaboration sessions supporting up to `>50` concurrent users.
+- Introduced WebGPU shader caching for `<20%` reduced load times.
+
+## Improvements
+
+- Optimized tensor operations by `40%` using native WebGPU compute shaders.
+
+<CodeGroup tabs="JavaScript,Python">
+  ```javascript
+  // New collaboration API
+  const session = await verridian.collab.create({
+    model: 'gpt-4o',
+    maxUsers: 50
+  });
+  ```
+  ```python
+  # New collaboration API
+  session = verridian.collab.create(
+      model='gpt-4o',
+      max_users=50
+  )
+  ```
+</CodeGroup>
+
+## Bug Fixes
+
+- Fixed memory leaks in long-running GPU sessions.
+- Resolved shader compilation errors on mobile WebGPU.
+
+</Update>
+
+<Update label="2024-09-20" description="v1.1.0" tags={["feature", "bugfix"]}>
+
+## New Features
+
+- Dashboard now includes live metrics for AI inference latency and GPU utilization.
+- Support for custom WebGPU pipelines in the shader editor.
+
+## Bug Fixes
+
+- Patched authentication token refresh issues causing `401` errors.
+- Corrected canvas rendering glitches on high-DPI displays.
+
+<Callout kind="tip">
+  Test custom pipelines in the sandbox before production deployment.
+</Callout>
+
+</Update>
+
+<Update label="2024-08-10" description="v1.0.0" tags={["feature", "breaking"]}>
+
+## New Features
+
+- Core WebGPU-accelerated AI rendering engine.
+- REST API for model deployment with `{API_KEY}` authentication.
+
+## Breaking Changes
+
+- Updated endpoint from `/v0/models` to `/v1/models`.
+
+## Initial Setup
+
+```bash
+npm install verridian@1.0.0
+verridian init --api-key YOUR_KEY
+```
+
+</Update>
+
+## Upgrade Instructions
+
+Follow these steps to update your Verridian installation across platforms.
+
+<Tabs>
+  <Tab title="Node.js" icon="nodejs">
+    <Steps>
+      <Step title="Update Package" icon="package">
+        Run the upgrade command.
+        ```bash
+        npm update verridian@latest
+        ```
+      </Step>
+      <Step title="Rebuild Shaders" icon="code">
+        Clear cache and rebuild.
+        ```bash
+        verridian shaders rebuild
+        ```
+      </Step>
+      <Step title="Test Deployment" icon="play">
+        Verify in staging environment.
+      </Step>
+    </Steps>
+  </Tab>
+  <Tab title="Python" icon="python">
+    <Steps>
+      <Step title="Update Package" icon="package">
+        ```bash
+        pip install --upgrade verridian
+        ```
+      </Step>
+      <Step title="Reconfigure" icon="settings">
+        Update `config.yaml` with new endpoints.
+      </Step>
+    </Steps>
+  </Tab>
+</Tabs>
+
+## Full History
+
+Access complete release notes in the [GitHub repository](https://github.com/verridian/ai/releases). You filter by tags like `feature` or `bugfix` for targeted reviews.
